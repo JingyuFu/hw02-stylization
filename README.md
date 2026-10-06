@@ -18,6 +18,7 @@ A real-time Unity study of Raphaëlle Colin's **Mio: Memories in Orbit — Shii*
 | Space | Cycle color paper → graphite → Dream Palette | Cycle the same three styles; manual selection lasts until restart or the next loop |
 | P | — | Pause/resume the camera sequence; shader animation continues |
 | R | — | Restart the camera sequence in color |
+| M | Mute/unmute music | Mute/unmute music |
 
 ## 1. Concept art and visual direction
 
@@ -105,11 +106,13 @@ This is submitted for the first suggested extra-credit option: texture support w
 
 ## BGM
 
-A project-root `BGM/` folder is reserved for the user-selected music file. Audio has not yet been integrated; the current turnaround is silent.
+The user selected **Opening — Nicolas Gueguen**, from *MIO: Memories in Orbit (Original Game Soundtrack)* (artist/composer/album attribution from the supplied MP3 metadata). The source is [BGM/01. Opening.mp3](BGM/01.%20Opening.mp3); the byte-identical [Unity copy](Assets/Audio/MIO/Opening.mp3) is accompanied by [music credits](Assets/Audio/MIO/Music%20Credits.txt). This is third-party soundtrack music, not an original composition for this project.
+
+[MIOBackgroundMusic.cs](Assets/Scripts/MIOBackgroundMusic.cs) plays the full approximately 67-second recording as a 2D loop in both final scenes, at 45% volume with a 0.75-second entrance fade. **M** toggles mute. Camera pause/restart and style switching leave music playback independent. The video uses the first 36 seconds with the same volume/entrance fade and a 1.8-second exit fade.
 
 ## Turnaround video
 
-[MIO-Turnaround-1080p.mp4](Videos/MIO/MIO-Turnaround-1080p.mp4) is **36 seconds, 1920 × 1080, 30 fps, H.264**, with no audio.
+[MIO-Turnaround-1080p.mp4](Videos/MIO/MIO-Turnaround-1080p.mp4) is **36 seconds, 1920 × 1080, 30 fps, H.264**, with stereo BGM.
 
 | Time | Demonstration |
 | --- | --- |
@@ -122,7 +125,7 @@ A project-root `BGM/` folder is reserved for the user-selected music file. Audio
 
 The recording contains 1080 frames rendered from the Unity scene, with camera and shader animation sampled at 1/30-second intervals. Scheduled style cuts use the same material selection as the interactive controller; physical keyboard input is not recorded. The Showcase scene runs this sequence live using [MIOShowcaseOrbit.cs](Assets/Scripts/MIOShowcaseOrbit.cs).
 
-To regenerate the video, exit Play mode and select **HW02 MIO → 11 - Export 36 second 1080p showcase video**. [MIOShowcaseStage.cs](Assets/Editor/MIOShowcaseStage.cs) uses Unity's built-in MediaEncoder and overwrites the MP4 at the path above. No external encoder package is required by the project.
+To regenerate the video, exit Play mode and select **HW02 MIO → 11 - Export 36 second 1080p showcase video**. [MIOShowcaseStage.cs](Assets/Editor/MIOShowcaseStage.cs) uses Unity's built-in MediaEncoder and overwrites the MP4 at the path above. Video and audio are encoded together. No external encoder package is required by the project.
 
 ## Validation and scope
 
@@ -135,6 +138,7 @@ The following reports document checks performed during development:
 | Paper/background | [Stable grain, foreground preservation, wider ink, and multiple resolutions](Screenshots/MIO/Paper/paper-validation.txt) |
 | Interactivity | [Rendered material switching](Screenshots/MIO/Interactivity/render-validation.txt); [Play-mode lifecycle and unchanged shared assets](Screenshots/MIO/Interactivity/play-mode-validation.txt) |
 | Dream Palette | [Shader, texture, wash, light, and restoration checks](Screenshots/MIO/Dream/dream-validation.txt); [Play-mode switching](Screenshots/MIO/Dream/play-mode-validation.txt) |
+| BGM | [Clip import and scene setup](Screenshots/MIO/Audio/import-validation.txt); [Play-mode playback and mute](Screenshots/MIO/Audio/play-mode-validation.txt); [Encoded audio validation](Screenshots/MIO/Audio/audio-verification.json) |
 | Geometry | [Mesh, UV, normal, and triangle checks](Screenshots/MIO/Character/geometry-validation.txt) |
 | Video | [360° framing and shader checks](Screenshots/MIO/Showcase/showcase-validation.txt); [1080 decoded frames, zero errors](Screenshots/MIO/Showcase/video-verification.json) |
 
@@ -145,6 +149,7 @@ Tasks 1–6 and the turnaround are implemented. The new Dream Palette shader is 
 ## Credits and source
 
 - **Concept and character:** [Raphaëlle Colin — Mio: Memories in Orbit — Shii](https://raphaelle_colin.artstation.com/projects/BkbRor), Douze Dixièmes / MIO: Memories in Orbit. The reference artwork and underlying character remain credited to their creators.
+- **Music:** Nicolas Gueguen, *Opening*, from *MIO: Memories in Orbit (Original Game Soundtrack)*. User-supplied recording; see the BGM section and music credits.
 - **Starting code:** [CIS 5660 HW02 starter](https://github.com/CIS-5660-Fall-2026/hw02-stylization) and the preceding Lab 03 toon-shading work.
 - **Implementation:** project-local procedural geometry, hatching texture, backdrop motifs, surface/full-screen shaders, interaction scripts, and capture utilities are included under `Assets/`. Editor builders and validation utilities are under `Assets/Editor/`; scenes are under `Assets/Scenes/`.
 - **API references:** [Shader Graph Custom Functions](https://docs.unity3d.com/Packages/com.unity.shadergraph@14.0/manual/Custom-Function-Node.html), [URP RTHandle blitting](https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@14.0/manual/customize/blit-to-rthandle.html), and [Unity MediaEncoder](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/Media.MediaEncoder.html).

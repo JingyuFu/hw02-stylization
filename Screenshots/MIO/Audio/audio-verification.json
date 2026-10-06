@@ -1,0 +1,15 @@
+{
+  "track": "Opening",
+  "artist_from_file_metadata": "Nicolas Gueguen",
+  "sample_rate": 48000,
+  "channels": 2,
+  "decoded_seconds": 36.0,
+  "peak": 0.3860679566860199,
+  "rms_dbfs": -26.38166054951451,
+  "clipped_samples": 0,
+  "correlation_with_selected_recording": 0.9934821318108239,
+  "alignment_lag_samples": -2256,
+  "mix_volume": 0.45,
+  "fade_in_seconds": 0.75,
+  "fade_out_seconds": 1.8
+}

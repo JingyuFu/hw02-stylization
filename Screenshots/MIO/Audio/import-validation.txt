@@ -1,0 +1,4 @@
+PASS: selected Opening.mp3 imports and decodes into non-silent PCM
+Sample rate: 48000; channels: 2; length: 66.96 seconds
+PASS: both final scenes contain the selected clip, a single listener, looping 2D AudioSource and mute controller
+Runtime volume: 0.45; fade-in: 0.75 seconds. Full source loops independently of the 36-second camera sequence.

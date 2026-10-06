@@ -1,0 +1,5 @@
+PASS: AudioSource starts playing in actual Unity Play mode
+PASS: mute/unmute handler toggles source mute
+PASS: M is ignored by the style controller
+PASS: disabling/re-enabling the music component stops/restarts playback
+Physical OS keyboard and speaker listening are not automated by this check.

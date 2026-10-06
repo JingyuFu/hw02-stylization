@@ -4,4 +4,4 @@ Space cycles Color Paper -> Graphite -> MIO Dream Palette -> Color Paper in Inte
 
 Palette reference: user-supplied MIO: Memories in Orbit gameplay screenshot (lavender foliage, cyan haze, peach/coral and cream highlights). This is an interpretation, not the game's original shader.
 
-The updated 36-second turnaround demonstrates all three modes. BGM is pending the user's chosen file in the root BGM folder. Extra-credit evaluation remains subject to instructor review.
+The updated 36-second turnaround demonstrates all three modes. The user's selected Opening recording is integrated as BGM; see Assets/Audio/MIO/Music Credits.txt. Extra-credit evaluation remains subject to instructor review.

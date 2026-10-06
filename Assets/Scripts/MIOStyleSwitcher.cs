@@ -70,7 +70,7 @@ public sealed class MIOStyleSwitcher : MonoBehaviour
         var box = new Rect(20, Screen.height - 58, Mathf.Min(470, Screen.width - 40), 36);
         GUI.color = new Color(1, 1, 1, .76f); GUI.DrawTexture(box, Texture2D.whiteTexture);
         GUI.color = new Color(.14f, .12f, .17f, 1);
-        GUI.Label(box, "SPACE  Next style / " + CurrentName, hintStyle);
+        GUI.Label(box, "SPACE  Next style / " + CurrentName + (GetComponent<MIOBackgroundMusic>() != null ? "    M  Music" : ""), hintStyle);
         GUI.color = oldColor;
     }
 }

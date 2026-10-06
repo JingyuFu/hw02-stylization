@@ -3,10 +3,14 @@ Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'C:\Users\fujin\AppData\Local\Temp\hw02-
     major_brand     : mp42
     minor_version   : 0
     compatible_brands: mp41isom
-  Duration: 00:00:36.00, start: 0.000000, bitrate: 7781 kb/s
-  Stream #0:0[0x1](und): Video: h264 (Constrained Baseline) (avc1 / 0x31637661), yuv420p(progressive), 1920x1080 [SAR 1:1 DAR 16:9], 7780 kb/s, 30 fps, 30 tbr, 30k tbn (default)
+  Duration: 00:00:36.01, start: 0.000000, bitrate: 7980 kb/s
+  Stream #0:0[0x1](und): Video: h264 (Constrained Baseline) (avc1 / 0x31637661), yuv420p(progressive), 1920x1080 [SAR 1:1 DAR 16:9], 7787 kb/s, 30 fps, 30 tbr, 30k tbn (default)
       Metadata:
         handler_name    : VideoHandler
         vendor_id       : [0][0][0][0]
         encoder         : AVC Coding
+  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 48000 Hz, stereo, fltp, 192 kb/s (default)
+      Metadata:
+        handler_name    : SoundHandler
+        vendor_id       : [0][0][0][0]
 At least one output file must be specified

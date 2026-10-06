@@ -58,7 +58,7 @@ public static class MIODreamStage
             "Extra credit candidate: MIO Dream Palette is a distinct surface Shader Graph derived from MIO Toon. RGB Pigment Map sampled in UV0 + adjustable UV scale, object-space domain-warped chromatic washes, independently colored light/middle/shadow bands, and cyan pigment pooling alter hue/saturation rather than scaling brightness. Original hatching, rim, multiple lights, and native depth/normal passes are retained.\n\n"+
             "Space cycles Color Paper -> Graphite -> MIO Dream Palette -> Color Paper in Interactive Study and Showcase. Only six solid-surface materials swap; animated ivory filaments retain their shader. Disabling the controller restores original assignments.\n\n"+
             "Palette reference: user-supplied MIO: Memories in Orbit gameplay screenshot (lavender foliage, cyan haze, peach/coral and cream highlights). This is an interpretation, not the game's original shader.\n\n"+
-            "The updated 36-second turnaround demonstrates all three modes. BGM is pending the user's chosen file in the root BGM folder. Extra-credit evaluation remains subject to instructor review.\n");
+            "The updated 36-second turnaround demonstrates all three modes. If music is configured, see Assets/Audio/MIO/Music Credits.txt for the selected recording. Extra-credit evaluation remains subject to instructor review.\n");
         AssetDatabase.Refresh(); Debug.Log("MIO DREAM STAGE COMPLETE\n"+string.Join("\n",report));
     }
     static Color Hex(string value) { ColorUtility.TryParseHtmlString("#"+value,out var c);return c; }

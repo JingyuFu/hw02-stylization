@@ -1,0 +1,7 @@
+User-selected recording: Opening
+Artist/composer: Nicolas Gueguen
+Album: MIO: Memories in Orbit (Original Game Soundtrack)
+Attribution from the supplied MP3's embedded metadata. Original file: BGM/01. Opening.mp3; imported copy: Assets/Audio/MIO/Opening.mp3. These files are byte-identical.
+Metadata copyright: 2026 Douze Dixiemes and Focus Entertainment, Kromatik, under exclusive license to Kid Katana Records.
+The recording is third-party soundtrack material supplied by the user, not original project music. No standalone redistribution license is asserted.
+Unity plays the full clip in a loop. The showcase video uses the first 36 seconds at 45% volume with 0.75s fade-in and 1.8s fade-out. M toggles mute; P/R affect the camera only.
