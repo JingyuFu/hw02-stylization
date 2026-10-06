@@ -1,0 +1,16 @@
+PASS: t=0s, orbit=0.0 degrees, style=0, hero stays within frame.
+PASS: t=5.2s, orbit=37.4 degrees, style=0, hero stays within frame.
+PASS: t=7.22s, orbit=90.0 degrees, style=0, hero stays within frame.
+PASS: t=10s, orbit=180.0 degrees, style=0, hero stays within frame.
+PASS: t=12.78s, orbit=270.0 degrees, style=0, hero stays within frame.
+PASS: t=14.8s, orbit=322.6 degrees, style=0, hero stays within frame.
+PASS: t=18s, orbit=360.0 degrees, style=0, hero stays within frame.
+PASS: t=21s, orbit=360.0 degrees, style=1, hero stays within frame.
+PASS: t=24.6s, orbit=391.4 degrees, style=1, hero stays within frame.
+PASS: t=27.5s, orbit=368.7 degrees, style=2, hero stays within frame.
+PASS: t=28s, orbit=360.0 degrees, style=2, hero stays within frame.
+PASS: t=30.5s, orbit=326.4 degrees, style=2, hero stays within frame.
+PASS: t=35.5s, orbit=360.0 degrees, style=0, hero stays within frame.
+PASS: the uninterrupted color segment completes exactly 360 degrees.
+PASS: all scene shaders render without compiler errors.
+PASS: Unity's H.264/MP4 encoder accepted all 30 preview frames.

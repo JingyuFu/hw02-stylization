@@ -1,0 +1,11 @@
+PASS: Zero-strength full-screen pass preserves camera color: zero changed pixels.
+PASS: Post-process outlines change the image: 34524 changed pixels.
+PASS: Separate depth/normal silhouettes align for static: IoU=0.944.
+PASS: Independent depth and normal edge maps both contain edges.
+PASS: Increasing depth width increases outline coverage.
+PASS: Zero wobble gives stable outlines with frozen geometry: zero changed pixels.
+PASS: Contour animation works independently of vertex animation: 2554 changed pixels.
+PASS: Separate depth/normal silhouettes align for animated filaments: IoU=0.944.
+PASS: Separate depth/normal silhouettes align for perspective camera: IoU=0.907.
+PASS: Normal buffer matches camera resolution (1600x1000 and 1280x720); perspective depth also works.
+PASS: Outline graph and Normal Copy compile and render without shader errors.

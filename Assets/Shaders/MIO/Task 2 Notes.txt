@@ -1,0 +1,18 @@
+HW02 - Task 2: Interesting Shaders
+
+Open Assets/Scenes/MIO Shader Study.unity and press Play.
+
+MIO Toon.shadergraph derives from the user's Lab 03 shader. It combines main/additional lights, a three-color palette and a custom seamless hatching texture sampled in UV0 with Shadow Scale. SoftRim adds a view-dependent, lighting-weighted rim; use Rim Strength = 0 to compare. Rim Color, Start and Softness control its appearance.
+
+MIO Living Filaments.shadergraph duplicates that improved graph and adds FilamentWave in the vertex stage (task 2 special shader, option 2). Smoothstep pins the roots; sine/cosine waves displace vertices along all three axes. UV1 carries curve distance and its gradient, while UV0 remains the surface UV. The vertex normal/tangent are transformed with the deformation Jacobian. End caps share ring data and bounds cover the full amplitude range. Only the 12 long filaments use this shader; the lens, pearl and throat strands remain static.
+
+Materials 01-06: Rim Strength / Rim Color / Rim Start / Rim Softness.
+Materials 09-10: Wave Amplitude / Wave Speed / Wave Count / Wave Phase. Zero amplitude restores the rest shape; zero speed freezes movement. A hidden Preview Time is used for repeatable captures, and is saved at -1 for normal Time-node animation.
+
+Screenshots/MIO/Shaders includes on/off rim renders, two animation times and GPU validation results.
+Task 3 is implemented separately in MIO Outline Study. Task 4 is implemented in MIO Paper Study; task 6 is implemented in MIO Interactive Study.
+
+Reference: Raphaelle Colin, Mio: Memories in Orbit - Shii, https://raphaelle_colin.artstation.com/projects/BkbRor
+Shader Graph Custom Function documentation: https://docs.unity3d.com/Packages/com.unity.shadergraph@14.0/manual/Custom-Function-Node.html
+
+Pencil shadow visibility: the seamless stroke texture uses broader, irregular pencil lines. Character materials use Hatching Strength 0.78-0.92 and Shadow Scale 2-3, with darker ink for legibility at full-character framing. Bright regions remain clean. See Screenshots/MIO/Hatching for current closeup/full renders and a strength-zero comparison.

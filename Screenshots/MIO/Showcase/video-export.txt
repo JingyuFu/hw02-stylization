@@ -1,0 +1,9 @@
+Unity 2022.3.62f2 / D3D11 / MediaEncoder
+1920 x 1080, 30 fps, 1080 frames, 36 seconds, MP4/H.264, no audio
+0-2s: color front. 2-18s: full 360-degree color orbit. 18-20s: front.
+20-25s: graphite, with a gentle three-quarter move after 23s.
+25-32s: Dream Palette. 32-36s: return to color and front.
+Every frame was rendered from the Unity scene. Hidden shader preview times advance at 1/30s per frame; all reset to live time afterward.
+All 1080 encoder AddFrame calls succeeded; shader checks passed.
+File bytes: 35015303
+Export elapsed seconds: 13.0

@@ -1,0 +1,3 @@
+PASS: Play-mode input handler reaches Dream surface rendering
+PASS: Play-mode third keypress restores Color Paper
+PASS: Disabling in Play restores original renderer materials

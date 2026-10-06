@@ -1,0 +1,20 @@
+HW02 task 3: animated depth/normal outlines
+
+Open Assets/Scenes/MIO Outline Study.unity and press Play. Camera uses MIO Outline Renderer; earlier study scenes keep their original renderer.
+
+Full Screen Feature.cs fixes the starter's missing blit-back, using URP 14 RTHandles and Blitter. MIO Animated Outlines.shadergraph is a URP Fullscreen Shader Graph; its Custom Function implements Roberts Cross edge detection over separate camera depth and normal textures. Depth edges and normal creases have independent width, threshold and strength. Ink color follows the reference's dark violet.
+
+NormalFeature is connected to the supplied Normal Buffer render texture and a Normal Copy material. It draws each material's native DepthNormals pass (so vertex-animated filaments match), then Normal Copy resolves signed world normals to encoded view normals. This is a NORMAL-ONLY texture, separate from camera depth. Its resolution updates to the current camera target automatically.
+
+Contour samples are warped by smoothly interpolated noise with stepped time (8 fps); internal normal edges remain steady. Wobble amplitude and speed are adjustable. This effect is distinct from the physical mesh seams and UV pencil-shadow texture. Fixed Edge Mask detects at the original fixed 1.5px depth/1px normal footprints; exposed widths dilate that mask, so thicker ink does not detect additional creases.
+
+To preserve the concept art's ivory filaments, their rendering layer is 128. NormalFeature captures their animated normals but marks their alpha .25, keeping them out of dark ink. Ordinary geometry alpha is 1; background is 0. Set Unoutlined Rendering Layers to 0 to outline everything. Depth remains in its separate camera texture.
+
+Material: Assets/Materials/MIO/MIO Animated Outlines.mat. Debug View: 0 final, 1 depth, 2 normals, 3 depth edges, 4 normal edges, 5 combined edges. Set Outline Strength to 0 for comparison. Hidden Preview Time is -1 for live animation.
+
+Screenshots/MIO/Outlines contains separate buffer/edge previews, identity comparison, moving-silhouette checks and rendering validation.
+
+Task 4 is implemented separately in MIO Paper Study. Task 6 is implemented in MIO Interactive Study. Remaining submission work: final turnaround video/README/PR.
+
+URP reference: https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@14.0/manual/customize/blit-to-rthandle.html
+Concept art: Raphaelle Colin, https://raphaelle_colin.artstation.com/projects/BkbRor

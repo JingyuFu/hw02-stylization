@@ -1,0 +1,13 @@
+PASS: Controller references two distinct shader materials
+PASS: Default interactive mode matches the original paper pass: 0 differences above GPU quantization tolerance
+PASS: Unrelated key does not change style
+PASS: Space selects the graphite material
+PASS: Color and graphite have a substantial full-frame visual difference
+PASS: Graphite output is monochrome across all pixels
+PASS: New crosshatching materially changes the tonal-band result
+PASS: Second Space restores the original color scene: 0 differences above GPU quantization tolerance
+PASS: Repeated switching preserves the renderer asset's default material
+PASS: Repeated switches do not accumulate effects: 0 differences above GPU quantization tolerance
+PASS: Disabling the controller safely falls back to color paper: 0 differences above GPU quantization tolerance
+PASS: Existing filament/outline animation survives graphite mode
+PASS: Graphite Shader Graph compiles and renders at multiple aspect ratios and in perspective

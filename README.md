@@ -1,220 +1,150 @@
-# HW 2: *3D Stylization*
+# HW 2: 3D Stylization — MIO / Shii
 
-## Project Overview:
-In this assignment, you will use a 2D concept art piece as inspiration to create a 3D Stylized scene in Unity. This will give you the opportunity to explore stylized graphics techniques alongside non-photo-realistic (NPR) real-time rendering workflows in Unity.
+A real-time Unity study of Raphaëlle Colin's **Mio: Memories in Orbit — Shii** concept art. The scene combines a violet/yellow toon palette, pencil-hatched shadows, animated outlines, moving ivory filaments, and a patterned paper finish. Press **Space** to cycle through color paper, graphite sketch, and a new MIO-inspired Dream Palette surface shader.
 
-| <img width="500px" src=https://github.com/CIS-566-Fall-2023/hw04-stylization/assets/72320867/755780f1-8b8c-47e1-b14f-3a619f92fd3a/>  | <img width="500px" src=https://github.com/CIS-566-Fall-2023/hw04-stylization/assets/72320867/70550c09-ba75-4d10-9b30-60874179ad10/> |
-|:--:|:--:|
-| *2D Concept Illustration* | *3D Stylized Scene in Unity* |
-### HW Task List:
-1. Picking a Piece of Concept Art
-2. Interesting Shaders
-3. Outlines
-4. Full Screen Post Process Effect
-5. Creating a Scene
-6. Interactivity
-7. Extra Credit
+[**Watch the 36-second turnaround video**](Videos/MIO/MIO-Turnaround-1080p.mp4) · [Original assignment instructions](docs/ASSIGNMENT.md)
 
----
-# Tasks
+![Final color-paper render](Screenshots/MIO/Showcase/poster-1080p.png)
 
-## 0. Base Project Overview
+## Open and run
 
-After forking the repo, take a moment to watch this brief HW/Base Project Overview which goes over things that you're expected to bring over from the lab, and etc.
-- [See the Project Overview here](https://youtu.be/JmVTmpgSz5U)
+- **Unity:** 2022.3.62f2. **Universal Render Pipeline:** 14.0.12. Validation and video capture used Windows / Direct3D 11.
+- Open this repository as a project in Unity Hub and allow package import and shader compilation to finish.
+- Open [MIO Interactive Study](Assets/Scenes/MIO%20Interactive%20Study.unity) for the fixed front composition, or [MIO Showcase](Assets/Scenes/MIO%20Showcase.unity) for the automatic turnaround.
+- Enter **Play**, click the **Game** view, and use the controls below. A **16:9** Game view gives the intended showcase framing. The saved scenes and assets are ready to use; regeneration is unnecessary.
 
-## 1. Picking a Piece of Concept Art
+| Input | Interactive Study | Showcase |
+| --- | --- | --- |
+| Space | Cycle color paper → graphite → Dream Palette | Cycle the same three styles; manual selection lasts until restart or the next loop |
+| P | — | Pause/resume the camera sequence; shader animation continues |
+| R | — | Restart the camera sequence in color |
 
-Choose a simple illustration to guide your stylization. Choose a relatively simple piece of art THAT INCLUDES OUTLINES. You *might* want to look through the rest of the homework instructions before committing to one. Here are some examples of styles that will work well. Feel free to choose one of these, but we encourage your to pick your own.
+## 1. Concept art and visual direction
 
-| ![](https://github.com/CIS-566-Fall-2023/hw04-stylization/assets/72320867/dae1ffc2-8269-493d-919f-b3811c76ed30) | ![](https://github.com/CIS-566-Fall-2023/hw04-stylization/assets/72320867/9c345ee6-19df-4191-9e47-6722b6597a5a) | ![](https://github.com/CIS-566-Fall-2023/hw04-stylization/assets/72320867/48521733-f83a-4704-ac8d-9d2f24574922) | ![](https://github.com/CIS-566-Fall-2023/hw04-stylization/assets/72320867/3068bdc4-1b08-41cf-9a16-08d94be5f1ea) |  ![](https://github.com/CIS-566-Fall-2023/hw04-stylization/assets/72320867/ae1d0fae-7998-4287-8269-13e2cafd740b) | 
-|:--:|:--:|:--:|:--:|:--:|
-| *https://twitter.com/stefscribbles/status/1646235145110683650* | *https://twitter.com/trudicastle/status/1122648793009098752* | *https://twitter.com/caomor/status/1049494055518908416* | *https://www.artstation.com/requinoesis* | *https://twitter.com/cysketch/status/1712442821389713597* | 
+**Artist:** [Raphaëlle Colin](https://raphaelle_colin.artstation.com/projects/BkbRor), *Mio: Memories in Orbit — Shii*. Original character/game: **MIO: Memories in Orbit**, Douze Dixièmes. The downloaded reference is included below for attribution and comparison.
 
+![Reference concept art by Raphaëlle Colin](raphaelle-colin-shii-5.webp)
 
-**Disclaimer: Don't forget to identify and credit the artist who created the concept art : )**
+The rendering follows the reference's dark violet contour lines, saturated violet and yellow armor, cyan accents, luminous ivory curves, and pale mint/sage background. The background's repeated symbols and grain informed the procedural backdrop and paper shaders. The model's side and back are interpretations of the front-view illustration.
 
-**[Emma Koch](https://www.artstation.com/ekoch)**, an amazing 3D artist I happened to stumble upon on ArtStation produces incredible 2D-esque 3D art pieces. Some of the references I picked above were inspired directly from her work. I'd definitely check out her artstation for any inspiraiton if you want some! [Link](https://www.artstation.com/ekoch)
+## 2. Interesting surface shaders
 
----
-## 2. Interesting Shaders
+### Improved toon shader
 
-Let's create some custom surface shaders for the objects in your scene, inspired by your concept art! 
+[MIO Toon.shadergraph](Assets/Shaders/MIO/MIO%20Toon.shadergraph) extends the Lab 03 toon shader through [MIOLighting.hlsl](Assets/Shaders/MIO/MIOLighting.hlsl).
 
-Take a moment to think about the main characteristics that you see in the shading of your concept art. What makes it look appealing/aesthetic?
-  * Is it the color palette? How are the different colors blending into each other? Is there any particular texture or pattern you notice?
-  * Are there additional effects such as rim or specular highlights?
-  * Are there multiple lights in the scene?
+- **Multiple lights:** combines the main light and URP Forward additional lights, including distance and shadow attenuation, before mapping illumination into the toon palette. A directional key and a point fill light are present in the character scene. Light intensity is evaluated as luminance to preserve the chosen material colors.
+- **Additional lighting feature:** a view-dependent soft rim, weighted by illumination, highlights curved armor and wing edges. Rim color, strength, start, and softness are exposed.
+- **Custom shadow texture:** an original, repeating pencil-stroke texture is generated by [MIOFoundation.cs](Assets/Editor/MIOFoundation.cs) and saved as [MIO Hatching.png](Assets/Textures/MIO/MIO%20Hatching.png). Its periodic construction makes it tile seamlessly. It is sampled using **object UV0**, with an exposed **Shadow Scale** per material, so strokes remain attached to the geometry as the camera moves.
+- **Palette:** separately authored highlight, midtone, and shadow colors retain yellow wing faces, violet armor, cyan details, and ivory filaments. The pencil texture darkens shaded regions rather than brightening shadows.
 
-These are all things we want you to think about before diving into your shaders!
+The final pencil strokes are broader without increasing their frequency; character materials use Shadow Scale 2–3 and hatching strength 0.90–0.98.
 
-### To-Do:
-1. **Improved Surface Shader**
-   - Create a surface shader inspired by the surface(s) in your concept art. Use the three tone toon shader you created from the Stylization Lab as a starting point to build a more interesting shader that fulfills all of the following requirements:
-      1. **Multiple Light Support**
-          - Follow the following tutorial to implement multiple light support.
-              - <img width="450" alt="Screenshot 2023-10-26 140845" src="https://github.com/CIS-566-Fall-2023/hw04-stylization/assets/72320867/b4c8dfed-b79d-4c2a-b280-41a617d69aaf">
-              - [Link to Complete Additional Light Support Tutorial Video](https://youtu.be/1CJ-ZDSFsMM)
-      2. **Additional Lighting Feature**
-          - Implement a Specular Highlight, Rim Highlight or another similarly interesting lighting-related effect
-      3. **Interesting Shadow**
-          1. Create your own custom shadow texture!
-              - You can use whatever tools you have available! Digital art (Photoshop, CSP, Procreate, etc.), traditional art (drawing on paper, and then taking a photo/scan)-you have complete freedom!
-          2. Make your texture seamless/tesselatable! You can do this through the following online tool: https://www.imgonline.com.ua/eng/make-seamless-texture.php
-          3. Modify your shadows using this custom texture in a similar way to Puzzle 3 from the Lab
-          4. Now, instead of using screen position, use the default object UVs!
-              - In the 3rd Puzzle of the Lab, the shadow texture was sampled using the Screen Position node. This time, let's use the object's UV coordinates to have the shadows conform to geometry. Hint: To get a consistent looking shadow texture scale across multiple objects, you're going to want some exposed float parameter, "Shadow Scale," that will adjust the tiling of the shadow texture. This will allow for per material control over the tiling of your shadow texture.
-              - <img width="350" src=https://github.com/CIS-566-Fall-2023/hw04-stylization/assets/72320867/1ceef0fc-fd9d-4987-80de-0a8b6ba6fe76>
-              - Notice how in this artwork by [Emma Koch](https://www.artstation.com/ekoch), Link's shadow does not remain fixed in screen space as it is drawn via object UV coordinates.
+| Rim off — isolated surface study | Rim on — isolated surface study |
+| --- | --- |
+| ![Rim disabled](Screenshots/MIO/Shaders/01-rim-off.png) | ![Rim enabled](Screenshots/MIO/Shaders/02-rim-on.png) |
 
-      4. **Accurate Color Palette**
-          - Do your best to replicate the colors/lighting of your concept art!
-3. **Special Surface Shader**
-   - *Let's get creative!* Create a SPECIAL second shader that adds a glow, a highlight or some other special effect that makes the object stand out in some way. This is intended to give you practice riffing on existing shaders. Most games or applications require some kind of highlighting: this could be an effect in a game that draw player focus, or a highlight on hover like you see in a tool. If your concept art doesn't provide a visual example of what highlighting could look like, use your imagination or find another piece of concept art. Duplicate your shader to create a variant with an additional special feature that will make the hero object of your scene stand out. Choose one of the following three options:
-       - **Option 1: Animated colors**
-              -   ![animesher com_gif-hair-colorful-1560031](https://github.com/CIS-566-Fall-2023/hw04-stylization/assets/1758825/4ba53d68-5a82-4108-a842-e71abf522cbc)
+### Special surface shader: vertex animation
 
-          - The above is a simple example of what an animated surface shader might do, eg flash through a bunch of different colors. Using at least two toolbox functions, animate some aspect of the surface shader to create an eye-catching effect. Consider how procedural patterns, the screen space position and noise might contribute.
-          - Useful tips to get started:
-              - Use the Time node in Unity's shader graph to get access to time for animation. Consider using a Floor node on time to explore staggered/stepped interpolation! This can be really helpful for selling the illusion of the animation feeling handdrawn.
-       - **Option 2: Vertex animation**
-          - Similar to the noise cloud assignment, modify your object shader to animate the vertex positions of your object, eg. making an object sway or bob up and down to make it stand out. You should be able to figure out how to do this given the walkthrough so far, but if you need addition help, check out [this tutorial](https://www.youtube.com/watch?v=VQxubpLxEqU&ab_channel=GabrielAguiarProd).
-       - **Option 3: Another Custom Effect Tailored to your Concept Art**
-          - If you'd like to do an alternative effect to Option 1, just make sure that your idea is roughly similar in scope/difficulty. Feel free to make an EdStem post or ask any TA to double check whether your effect would be sufficient.
+[MIO Living Filaments.shadergraph](Assets/Shaders/MIO/MIO%20Living%20Filaments.shadergraph) is a second surface shader derived from the improved toon graph. It implements **option 2, vertex animation**, using [MIOFilamentWave.hlsl](Assets/Shaders/MIO/MIOFilamentWave.hlsl).
 
----
-## 3. Outlines
-Make your objects pop by adding outlines to your scene! 
+The 12 long filaments sway with sine/cosine waves. A smooth root mask keeps their attachment points fixed. UV1 stores distance along each curve and its gradient; UV0 remains available for surface texturing. Normals and tangents follow the deformation so lighting and the normal buffer match the animated geometry. Amplitude, speed, wave count, and phase are adjustable.
 
-Specifically, we'll be creating ***Post Process Outlines*** based on Depth and Normal buffers of our scene!
+## 3. Animated depth/normal outlines
 
-### To-Do:
-1. Render Features! Render Features are awesome, they let us add customizable render passes to any part of the render pipeline. To learn more about them, first, watch the following video which introduces an example usecase of a renderer feature in Unity:
-    - [See here](https://youtu.be/GAh225QNpm0?si=XvKqVsvv9Gy1ufi3)
-2. Next, let's explore the HW base code briely, and specifically, learn more about the "Full Screen Feature" that's included as part of your base project. There's a small part missing from "Full Screen Feature.cs" that's preventing it from applying any type of full screen shader to the screen. Your job is to solve this bug and in the process, learn how to create a Full Screen Shadergraph, and then have it actually affect the game view! Watch the following video to get a deeper break down of the Render Feature's code and some hints on what the solution may be.
-    - [See here for Full Screen Render Feature Debugging Hints/Overview Video](https://youtu.be/Bc9eTlMPdjU)
-4. Using what we've learnt about Render Features/URP as a base, let's now get access to the Depth and Normal Buffers of our scene!
-    - Unity's Universal Render Pipeline actually already provides us with the option to have a depth buffer, and so obtaining a depth buffer is a very simple/trivial process.
-    - This is not the case for a Normal Buffer, and thus, we need a render feature to render out the scene's normals into a render texture. Since the render feature for this has too much syntax specific fluff that's too Unity heavy and not very fun, I've provided a working render feature that renders objects' normals into a render texture in the /Render Features folder, called the "Normal Feature." There is also a shader provided, "Hidden/Normal Copy" or "Normal Copy.shader."
-        - Your task is to add the Normal Feature to the render pipeline, make a material off of the Normal Copy shader and then plug it into the Normal Feature, and finally, connect the render texture called "Normal Buffer" located in the "/Buffers" directory as the destination target for the render feature.
-            - Set the resolution of the Normal Buffer render texture to be equal to your game window resolution.
-    - Watch the following video for clarifications on both of these processes, and also, how to actually access and read the depth and normal buffers once we've created them.
-        - [See here for complete tutorial video on Depth and Normal Buffers](https://youtu.be/giLPZA-xAXk)
+The starter [Full Screen Feature.cs](Assets/Render%20Settings/Render%20Features/Full%20Screen%20Feature.cs) now renders through a temporary RTHandle and blits the result back to camera color. The outline system uses **separate buffers**:
 
-5. Finally, using everything you've learnt about Render Features alongside the fact that we now have proper access to both Depth and Normal Buffers, let's create a Post Process Outline Shader!
-    - We **STRONGLY RECOMMEND** watching at least one of these Incredibly Useful Tutorials before getting started on Outlines:
-        - [NedMakesGames](https://www.youtube.com/@NedMakesGames)
-            - [Tutorial on Depth Buffer Sobel Edge Detection Outlines in Unity URP](https://youtu.be/RMt6DcaMxcE?si=WI7H5zyECoaqBsqF)
-        - [Robin Seibold](https://www.youtube.com/@RobinSeibold)
-            -  [Tutorial on Depth and Normal Buffer Robert's Cross Outliens in Unity](https://youtu.be/LMqio9NsqmM?si=zmtWxtdb1ViG2tFs)
-        - [Alexander Ameye](https://ameye.dev/about/)
-            - [Article on Edge Detection Post Process Outlines in Unity](https://ameye.dev/notes/edge-detection-outlines/)
-        - **Important Clarification/Note on the Tutorials:**
-            - You will quickly notice after watching/reading any of these tutorials that many of them use a Render Feature to render out a single DepthNormals Texture that encodes both depth and normal information into a single texture. This optimization saves on performance but results in less accurate depth or normals information and is overall more confusing for a first time experience into Render Features. Thus, for this assignment, we will just be sticking to our approach of having separate Depth and Normal buffers.
-   
-    - Next, we will create a basic Depth and Normal based outline prototype that produces black outlines at areas of large depth and normal difference across the screen.
-            - Explore different kinds of edge detection methods, including Sobel and Robert's Cross filters
-            - Make sure the outline has adjustable parameters, such as width. 
-    - Let's get creative! Modify your outline to be ANIMATED and to have an appearance that resembles the outlines in your concept art / OR, if the outlines in your concept art are too plain, try to make your outline resemble crayon/pencil sketching/etc.
-        - Use your knowledge of toolbox functions to add some wobble, or warping or noise onto the lines that changes over time.
-        - In my example below, you might be able to notice that the internal Normal Buffer based edges actually don't have any warping/animation. I did this intentionally because I wanted the final look to still have some kind of structure. Thus, by doing the depth and normal outlines in separate passes, I'm able to have a variety of animated/non-animated outlines composited together : ) !
-            <p align="center"> <img width="300px" src=https://github.com/CIS-566-Fall-2023/hw04-stylization/assets/72320867/69b3705b-4e65-4d44-b535-b0fd198d7b6f/>
+- Camera depth provides silhouette/discontinuity information.
+- [NormalFeature.cs](Assets/Render%20Settings/Render%20Features/NormalFeature.cs) captures the materials' native DepthNormals passes, including animated vertices, then resolves them into the supplied **Normal Buffer** render texture. RGB stores encoded view normals; alpha marks geometry and outline eligibility. Depth is not packed into this texture. Its resolution follows the camera target.
 
-7. (OPTIONAL) If you're not satisfied with the look of your outlines and are looking for an extra challenge, after implementing depth/normal based post processing, you may explore non-post process techniques such as inverse hull edge rendering for outer edges to render bolder, more solid looking outlines for a different look.
-    - Check out Alexander Ameye's article on alternative methods of outline rendering in Unity: [See Here](https://ameye.dev/notes/rendering-outlines/)
+[MIO Edge Mask.shader](Assets/Shaders/MIO/MIO%20Edge%20Mask.shader) detects depth and normal changes with Roberts Cross. [MIO Animated Outlines.shadergraph](Assets/Shaders/MIO/MIO%20Animated%20Outlines.shadergraph) and [MIOOutlines.hlsl](Assets/Shaders/MIO/MIOOutlines.hlsl) composite violet ink with independently adjustable depth/normal widths, thresholds, and strengths.
 
----
-## 4. Full Screen Post Process Effect
-We're nearing the end! 
+Depth contours wobble with noise evaluated at stepped time (8 updates per second); normal creases remain steady. Detection uses fixed sampling footprints, and a separate dilation stage widens existing edges. Increasing line width therefore does not introduce newly detected creases. The final depth/normal widths are 3 / 1.8 and overall ink strength is 0.94.
 
-### To-Do:
-Ok, now regardless of what your concept art looks like, using what you know about toolbox functions and screen space effects, add an appealing post-process effect to give your scene a unique look. Your post processing effect should do at least one of the following.
-* A vingette that darkens the edges of your images with a color or pattern
-* Color / tone mapping that changes the colorization of your renders. [Here's some basic ideas, but please experiment](https://gmshaders.com/tutorials/basic_colors/) 
-* A texture to make your image look like it's drawn on paper or some other surface.
-* A blur to make your image look smudged.
-* Fog or clouds that drift over your scene
-* Whatever else you can think of that complements your scene!
+The ivory filaments retain their light color: rendering layer 128 marks them for exclusion from dark outlines while retaining their animated normal data. Outline debug views expose depth, normals, each edge map, and their combination.
 
-***Note: This should be easily accomplishable using what you should have already learnt about working with Unity's Custom Render Features from the Outline section!***
+| Separate depth buffer | Separate normal buffer |
+| --- | --- |
+| ![Depth buffer](Screenshots/MIO/Outlines/04-depth-buffer.png) | ![Normal buffer](Screenshots/MIO/Outlines/05-normal-buffer.png) |
 
----
-## 5. Create a Scene
-Using Unity's controls, create a ***SUPER BASIC*** scene with a few elements to show off your unique rendering stylization. Be sure to apply the materials you've created. Please don't go crazy with the geometry -- then you'll have github problems if your files are too large. [See here](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github). 
+## 4. Full-screen paper and patterned background
 
-Note that your modelling will NOT be graded at all for this assignment. It is **NOT** expected that your scene will be a one-to-one faithful replica of your concept art. You are **STRONGLY ENCOURAGED** to find free assets online, even if they don't strongly resemble the geometry/objects present in your concept art. (TLDR; If you choose to model your own geometry for this project, be aware of the time-constraint and risk!)
+[MIO Memory Backdrop.shadergraph](Assets/Shaders/MIO/MIO%20Memory%20Backdrop.shadergraph) draws mint, sage, and cream washes using domain-warped noise. Pale motifs made from circles and bent segments vary in scale, rotation, and opacity. They become denser near the bottom and quieter behind the character. The backdrop is generated procedurally rather than displaying the reference image.
 
-Some example resources for finding 3D assets to populate your scene With:
-1. [SketchFab](https://sketchfab.com/)
-2. [Mixamo](https://www.mixamo.com/#/)
-3. [TurboSquid](https://www.turbosquid.com/)
+[MIO Paper Grain.shadergraph](Assets/Shaders/MIO/MIO%20Paper%20Grain.shadergraph), with [MIOMemoryPaper.hlsl](Assets/Shaders/MIO/MIOMemoryPaper.hlsl), adds multi-scale paper tooth, fibers, and uneven pigment across **both the character and background**. The screen-space texture stays stationary as animation advances. Paper Strength, Grain Scale, and Fiber Strength are exposed.
 
-## 6. Interactivity
-As a finishing touch, let's show off the fact that our scene is rendered in real-time! Please add an element of interactivity to your scene. Change some major visual aspect of your scene on a keypress. The triggered change could be
-* Party mode (things speed up, different colorization)
-* Memory mode (different post-processing effects to color you scene differently)
-* Fanart mode (different surface shaders, as if done by a different artist)
-* Whatever else you can think of! Combine these ideas, or come up with something new. Just note, your interactive change should be at least as complex as implementing a new type of post processing effect or surface shader. We'll be disappointed if its just a parameter change. There should be significant visual change.
+The render order is: **procedural background → opaque character → normal capture → edge mask → animated ink → paper/graphite finish**. Rendering the background before geometry preserves the character's antialiased silhouette.
 
-### To-Do:
-* Create at least one new material to be swapped in using a key press
-* Create and attach a new C# script that listens for a key press and swaps out the material on that key press. 
-Your C# script should look something like this:
-```
-public Material[] materials;
-private MeshRenderer meshRenderer;
-int index;
+## 5. Scene and geometry
 
-void Start () {
-          meshRenderer = GetComponent<MeshRenderer>();
-}
+The scene uses the [MIO Character prefab](Assets/Models/MIOCharacter/MIO%20Character.prefab), constructed by [MIOCharacterBuilder.cs](Assets/Editor/MIOCharacterBuilder.cs). Separate helmet, torso, wing, limb, and filament meshes provide UVs, normals, and tangents for the shaders. The generated geometry contains **113 meshes, 44,762 vertices, and 78,712 triangles**. These are newly constructed study meshes, not extracted game assets.
 
-void Update () {
-          if (Input.GetKeyDown(KeyCode.Space)){
-                 index = (index + 1) % materials.Count;
-                 SwapToNextMaterial(index);
-          }
-}
+The final composition uses an orthographic camera, a directional light, a point fill light, and the procedural backdrop. Earlier `MIO Material`, `Character`, `Shader`, `Outline`, and `Paper Study` scenes remain available to inspect individual stages.
 
-void SwapToNextMaterial (int index) {
-          meshRenderer.material = materials[index % materials.Count];
-}
-```
-* Attach the c# script as a component to the object(s) that you want to change on keypress
-* Assign all the relevant materials to the Materials list field so you object knows what to swap between.
- 
----
-## 7. Extra Credit
-Explore! What else can you do to polish your scene?
-  
-- Implement Texture Support for your Toon Surface Shader with Appealing Procedural Coloring.
-    - I.e. The procedural coloring needs to be more than just multiplying by 0.6 or 1.5 to decrease/increase the value. Consider more deeply the relationship between things such as value and saturation in artist-crafted color palettes? 
-- Add an interesting terrain with grass and/or other interesting features
-- Implement a Custom Skybox alongside a day-night cycle lighting script that changes the main directional light's colors and direction over time.
-- Add water puddles with screenspace reflections!
-- Any other similar level of extra spice to your scene : ) (Evaluated on a case-by-case basis by TAs/Rachel/Adam)
+## 6. Interactivity: graphite sketch mode
 
-## Submission
-1. Video of a turnaround of your scene
-2. A comprehensive readme doc that outlines all of the different components you accomplished throughout the homework. 
-3. All your source files, submitted as a PR against this repository.
+[MIOStyleSwitcher.cs](Assets/Scripts/MIOStyleSwitcher.cs), attached to the main camera, listens for **Space** through `Input.GetKeyDown`. It selects the final full-screen material for the current mode; Dream Palette additionally swaps solid-surface material assignments. Shared material assets are not edited by runtime switching.
 
-## Resources:
+Graphite mode uses a **new material and a new shader**, [MIO Graphite Sketch.shadergraph](Assets/Shaders/MIO/MIO%20Graphite%20Sketch.shadergraph), backed by [MIOGraphite.hlsl](Assets/Shaders/MIO/MIOGraphite.hlsl). It reconstructs five tonal bands, adds three directions of pencil strokes according to darkness, varies their curvature and dryness, converts ivory filaments into graphite lines using the normal-buffer mask, and applies neutral paper texture. This changes the rendering technique as well as removing color.
 
-1. Link to all my videos:
-    - [Playlist link](https://www.youtube.com/playlist?list=PLEScZZttnDck7Mm_mnlHmLMfR3Q83xIGp)
-2. [Lab Video](https://youtu.be/jc5MLgzJong?si=JycYxROACJk8KpM4)
-3. Very Helpful Creators/Videos from the internet
-    - [Cyanilux](https://www.cyanilux.com/)
-        - [Article on Depth in Unity | How depth buffers work!](https://www.cyanilux.com/tutorials/depth/) 
-    - [NedMakesGames](https://www.youtube.com/@NedMakesGames)
-        - [Toon Shader Lighting Tutorial](https://www.youtube.com/watch?v=GQyCPaThQnA&ab_channel=NedMakesGames)
-        - [Tutorial on Depth Buffer Sobel Edge Detection Outlines in Unity URP](https://youtu.be/RMt6DcaMxcE?si=WI7H5zyECoaqBsqF)
-    - [MinionsArt](https://www.youtube.com/@MinionsArt)
-        - [Toon Shader Tutorial](https://www.youtube.com/watch?v=FIP6I1x6lMA&ab_channel=MinionsArt)
-    - [Brackeys](https://www.youtube.com/@Brackeys)
-        - [Intro to Unity Shader Graph](https://www.youtube.com/watch?v=Ar9eIn4z6XE&ab_channel=Brackeys)
-    - [Robin Seibold](https://www.youtube.com/@RobinSeibold)
-        - [Tutorial on Depth and Normal Buffer Robert's Cross Outliens in Unity](https://youtu.be/LMqio9NsqmM?si=zmtWxtdb1ViG2tFs)
-    - [Alexander Ameye](https://ameye.dev/about/)
-        - [Article on Edge Detection Post Process Outlines in Unity](https://ameye.dev/notes/edge-detection-outlines/)
+The original object-UV shadow texture, outlines, and vertex animation remain active. The additional graphite crosshatching is a screen-space post effect. The next Space press selects Dream Palette; the third returns to Color Paper. Both original styles retain their appearance.
+
+![Graphite sketch mode from the final video](Screenshots/MIO/Showcase/decoded-21.00s.png)
+
+## 7. Extra-credit candidate: textured Dream Palette
+
+[MIO Dream Palette.shadergraph](Assets/Shaders/MIO/MIO%20Dream%20Palette.shadergraph) is a separate surface shader derived from the improved toon graph. It takes the lavender/blue, cyan, peach, and cream palette from the [additional user-supplied gameplay reference](docs/references/mio-gameplay-palette.png). This is a new interpretation of the game's colors, not its original shader or extracted assets.
+
+- **RGB texture support:** an exposed Pigment Map samples the original [MIO Dream Pigment texture](Assets/Textures/MIO/MIO%20Dream%20Pigment.png) in UV0. Texture influence and UV scale are independent controls. The texture is generated with periodic functions and imported as an sRGB, repeating, mipmapped color texture.
+- **Procedural coloring:** [MIODreamPalette.hlsl](Assets/Shaders/MIO/MIODreamPalette.hlsl) combines object-space domain-warped noise, warm highlight blooms, cool cyan pigment pooling, and independently authored light/middle/shadow colors. It changes hue and saturation in relation to lighting rather than multiplying a base color by a brightness factor.
+- **Integration:** six new surface materials replace the character's solid surfaces in Dream mode. Additional lights, rim lighting, UV shadow hatching, paper, and outlines remain active. Ivory filaments retain their animated shader. The controller restores the original assignments on returning to another mode or being disabled during Play.
+
+![Dream Palette surface rendering](Screenshots/MIO/Dream/03-dream.png)
+
+This is submitted for the first suggested extra-credit option: texture support with appealing procedural coloring. Final extra-credit evaluation is at the instructors' discretion. [MIODreamStage.cs](Assets/Editor/MIODreamStage.cs) builds the assets and provides isolated texture-off and wash-off comparisons.
+
+## BGM
+
+A project-root `BGM/` folder is reserved for the user-selected music file. Audio has not yet been integrated; the current turnaround is silent.
+
+## Turnaround video
+
+[MIO-Turnaround-1080p.mp4](Videos/MIO/MIO-Turnaround-1080p.mp4) is **36 seconds, 1920 × 1080, 30 fps, H.264**, with no audio.
+
+| Time | Demonstration |
+| --- | --- |
+| 0–2 s | Color front view |
+| 2–18 s | One uninterrupted 360° orbit |
+| 18–20 s | Return to the front |
+| 20–25 s | Graphite mode, followed by a small camera move |
+| 25–32 s | Dream Palette, moving between three-quarter views |
+| 32–36 s | Restore color and return to the front |
+
+The recording contains 1080 frames rendered from the Unity scene, with camera and shader animation sampled at 1/30-second intervals. Scheduled style cuts use the same material selection as the interactive controller; physical keyboard input is not recorded. The Showcase scene runs this sequence live using [MIOShowcaseOrbit.cs](Assets/Scripts/MIOShowcaseOrbit.cs).
+
+To regenerate the video, exit Play mode and select **HW02 MIO → 11 - Export 36 second 1080p showcase video**. [MIOShowcaseStage.cs](Assets/Editor/MIOShowcaseStage.cs) uses Unity's built-in MediaEncoder and overwrites the MP4 at the path above. No external encoder package is required by the project.
+
+## Validation and scope
+
+The following reports document checks performed during development:
+
+| Area | Evidence |
+| --- | --- |
+| Surface shaders | [Rim, animation, and shader compilation checks](Screenshots/MIO/Shaders/shader-validation.txt); [UV hatching checks](Screenshots/MIO/Hatching/hatching-validation.txt) |
+| Outlines | [Separate buffer alignment, independent edges, width, and animation checks](Screenshots/MIO/Paper/outline-validation.txt) |
+| Paper/background | [Stable grain, foreground preservation, wider ink, and multiple resolutions](Screenshots/MIO/Paper/paper-validation.txt) |
+| Interactivity | [Rendered material switching](Screenshots/MIO/Interactivity/render-validation.txt); [Play-mode lifecycle and unchanged shared assets](Screenshots/MIO/Interactivity/play-mode-validation.txt) |
+| Dream Palette | [Shader, texture, wash, light, and restoration checks](Screenshots/MIO/Dream/dream-validation.txt); [Play-mode switching](Screenshots/MIO/Dream/play-mode-validation.txt) |
+| Geometry | [Mesh, UV, normal, and triangle checks](Screenshots/MIO/Character/geometry-validation.txt) |
+| Video | [360° framing and shader checks](Screenshots/MIO/Showcase/showcase-validation.txt); [1080 decoded frames, zero errors](Screenshots/MIO/Showcase/video-verification.json) |
+
+Automated Play-mode checks invoke the same handler used by keyboard input; they do not inject physical OS keypresses. Earlier study screenshots and task notes document their respective development stages; the Showcase images and video show the final appearance. This implementation targets the project's URP Forward configuration; other graphics APIs and deployment platforms have not been validated.
+
+Tasks 1–6 and the turnaround are implemented. The new Dream Palette shader is included as an extra-credit candidate; see section 7.
+
+## Credits and source
+
+- **Concept and character:** [Raphaëlle Colin — Mio: Memories in Orbit — Shii](https://raphaelle_colin.artstation.com/projects/BkbRor), Douze Dixièmes / MIO: Memories in Orbit. The reference artwork and underlying character remain credited to their creators.
+- **Starting code:** [CIS 5660 HW02 starter](https://github.com/CIS-5660-Fall-2026/hw02-stylization) and the preceding Lab 03 toon-shading work.
+- **Implementation:** project-local procedural geometry, hatching texture, backdrop motifs, surface/full-screen shaders, interaction scripts, and capture utilities are included under `Assets/`. Editor builders and validation utilities are under `Assets/Editor/`; scenes are under `Assets/Scenes/`.
+- **API references:** [Shader Graph Custom Functions](https://docs.unity3d.com/Packages/com.unity.shadergraph@14.0/manual/Custom-Function-Node.html), [URP RTHandle blitting](https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@14.0/manual/customize/blit-to-rthandle.html), and [Unity MediaEncoder](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/Media.MediaEncoder.html).

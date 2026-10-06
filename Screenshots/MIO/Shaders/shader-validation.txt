@@ -1,0 +1,7 @@
+PASS: All 12 filaments have curve data, pinned roots, matching cap data and expanded culling bounds.
+PASS: Rim lighting changes the rendered armor: 24040 changed pixels.
+PASS: Vertex animation changes the filament silhouette: 85727 changed pixels.
+PASS: Zero amplitude disables movement: zero changed pixels.
+PASS: Zero speed freezes the animation: zero changed pixels.
+PASS: Helmet, body, wings and lens remain stationary: zero changed pixels.
+PASS: Both Shader Graphs compiled and rendered without shader errors (D3D11).

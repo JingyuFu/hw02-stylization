@@ -1,0 +1,21 @@
+HW02 task 4: patterned painted background and full-screen paper
+
+Open Assets/Scenes/MIO Paper Study.unity and press Play. The camera uses MIO Paper Renderer. This includes task 2 surface shading/filaments, task 3 depth/normal ink, and task 4 full-screen paper.
+
+Rendering order: original procedural background (event 250, before opaque geometry); opaque character with native MSAA; separate normal buffer; fixed edge detection (449); widened animated ink (AfterRenderingTransparents, 500); full-screen paper (502). Drawing the backdrop first preserves antialiased silhouettes.
+
+MIO Memory Backdrop.shadergraph and MIOMemoryPaper.hlsl build mint/sage/cream painted washes with domain-warped noise. Original line motifs are constructed from circles and bent segments. Their scale, rotation and opacity vary; motifs become denser toward the bottom and quieter behind the hero. These are newly authored procedural shapes inspired by the reference, not the original image pasted behind the model.
+
+MIO Paper Grain.shadergraph applies stationary multi-scale paper tooth, fibers and uneven pigment after ALL scene elements and outlines. Therefore the paper covers both the character and the background. Paper Strength=0 disables the paper treatment. Grain Scale and Fiber Strength are exposed. Paper uses normalized screen coordinates (1080-height units) and does not flicker with Time.
+
+Ink revision: Depth Width 1.5 -> 3; Normal Width 1 -> 1.8; Outline Strength .88 -> .94. Fixed Roberts detection footprints and thresholds remain unchanged. The separate RG mask stores depth/normal edges, and mask dilation thickens only previously detected lines. Ivory filaments remain excluded from dark ink.
+
+Shadow revision: the seamless UV pencil texture keeps its 7-cycle frequency and per-material Shadow Scale of 2/3, while stroke half-width increases .085 -> .125. Pattern Strength increases to .90 on gold and .98 elsewhere. No extra hatch lines or shadow-threshold changes.
+
+Controls: Assets/Materials/MIO/MIO Memory Backdrop.mat (wash strength, glyph opacity/density), MIO Paper Grain.mat (paper/grain/fibers), MIO Animated Outlines.mat (ink widths/strength/wobble).
+
+Screenshots/MIO/Paper contains ink, wash, glyph and paper comparisons, detail/widescreen/perspective renders, animation and validation. Earlier step screenshots are historical comparisons.
+
+Task 6 is implemented in MIO Interactive Study. Remaining submission work: final turnaround video, comprehensive README and PR.
+
+Concept art: Raphaelle Colin, Mio: Memories in Orbit - Shii, https://raphaelle_colin.artstation.com/projects/BkbRor

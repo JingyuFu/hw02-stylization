@@ -1,0 +1,8 @@
+MIO MODEL VALIDATED
+Meshes: 113
+Vertices: 44762
+Triangles: 78712
+UV0 and normals: present on all meshes
+Non-finite vertices: none
+Degenerate triangles: none
+Materials: assigned

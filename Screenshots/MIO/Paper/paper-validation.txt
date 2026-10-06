@@ -1,0 +1,10 @@
+PASS: Widening lines leaves the detected depth/normal edge mask exactly unchanged: 0 changed pixels
+PASS: Wider ink visibly changes existing line coverage: 47190 changed pixels
+PASS: Zero backdrop strength preserves the previous composite within one 8-bit level: maximum channel difference 1/255
+PASS: Pale glyphs are visible over the painted washes: 158582 changed pixels
+PASS: Background is drawn before geometry; 83559 foreground interior pixels are preserved
+PASS: Zero paper strength preserves the patterned scene within one 8-bit level: maximum channel difference 0/255
+PASS: Paper grain covers the hero (118697 pixels) and background (1174594 pixels)
+PASS: Frozen paper stays stable: 0/1600000 pixels differ, maximum 0/255 (GPU tolerance <=3/255 on <128 pixels)
+PASS: Filament and outline animation remain active under paper: 88741 changed pixels
+PASS: Fullscreen backdrop, edge mask, outlines and paper compile and render at 1600x1000, 1600x900 and 1280x720

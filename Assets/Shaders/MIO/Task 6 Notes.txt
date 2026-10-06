@@ -1,0 +1,17 @@
+HW02 task 6: keyboard-driven color paper / graphite sketch
+
+Open Assets/Scenes/MIO Interactive Study.unity, press Play, click the Game view and press Space. Each key-down switches between Color Paper and Graphite. A small bottom-left label shows the control and current mode. Earlier study scenes remain separate.
+
+MIOStyleSwitcher.cs is attached to the main camera with two assigned materials. Update uses Input.GetKeyDown(KeyCode.Space), matching this project's existing legacy Input Manager. Its key handler advances the runtime material index. MIO Interactive Renderer's Style Finish pass resolves the selected material for this camera. Shared material and renderer assets are never edited by the runtime switch.
+
+Color Paper uses the existing MIO Paper Grain material. Graphite uses a NEW material and a NEW Fullscreen Shader Graph, MIO Graphite Sketch, with MIOGraphite.hlsl. It reconstructs luminance as five graphite value bands, adds three differently oriented procedural pencil stroke families according to shadow depth, varies stroke curvature/dryness, turns ivory filaments into graphite lines using the existing normal-buffer mask, and finishes with neutral paper tooth/fibers. It is more than a saturation or color parameter change.
+
+The depth/normal outlines, object-UV pencil shadows, background motifs and filament vertex animation remain active in both modes. Graphite hatch spacing/width/strength, tonal contrast and paper strength are adjustable in MIO Graphite Sketch.mat. The new crosshatching is a screen-space post effect; the original object-UV shadow texture is retained underneath.
+
+Validation includes actual Unity renders of both materials, crosshatching-off comparison, restoration after repeated switching, animation, multiple camera aspect ratios and perspective. A separate Play-mode run invokes the same key handler used by Update, checks the rendered swap and lifecycle, and verifies that shared asset files are unchanged. Physical OS keyboard input is checked by the user in Game view; the automated test invokes the key handler directly.
+
+Screenshots/MIO/Interactivity contains color/graphite previews, detail images, switching animation and validation reports.
+
+Tasks 1-6 are implemented. Remaining submission work: a turnaround video, comprehensive README, and PR. Extra credit is optional.
+
+Concept art: Raphaelle Colin, Mio: Memories in Orbit - Shii, https://raphaelle_colin.artstation.com/projects/BkbRor

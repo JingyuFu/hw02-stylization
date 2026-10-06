@@ -1,0 +1,9 @@
+PASS: Third Space-cycle style uses six distinct Dream surface materials and changes the visible palette
+PASS: Graphite remains monochrome
+PASS: RGB pigment texture affects the surface independently
+PASS: Procedural chromatic wash affects the surface independently
+PASS: Dream shader responds to the additional point light
+PASS: Vertex and outline animation remain active in Dream mode
+PASS: A complete three-style cycle restores original rendering exactly within quantization tolerance; differing pixels=0
+PASS: Repeated three-style cycles do not accumulate material changes
+PASS: Dream Shader Graph compiles and renders in orthographic and perspective views: 

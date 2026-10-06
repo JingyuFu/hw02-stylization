@@ -1,0 +1,16 @@
+PASS: Play starts in color with an enabled keyboard controller
+PASS: Space handler swaps the actual rendered material during Play
+PASS: Other keys are ignored during Play
+PASS: Space toggles back during Play: 0 differences above GPU quantization tolerance
+PASS: Disabled runtime controller falls back to color: 0 differences above GPU quantization tolerance
+PASS: Re-enabling the runtime controller resets it to color
+PASS: Play mode leaves asset unchanged: Assets/Materials/MIO\MIO Animated Outlines.mat
+PASS: Play mode leaves asset unchanged: Assets/Materials/MIO\MIO Cyan.mat
+PASS: Play mode leaves asset unchanged: Assets/Materials/MIO\MIO Graphite Sketch.mat
+PASS: Play mode leaves asset unchanged: Assets/Materials/MIO\MIO Memory Backdrop.mat
+PASS: Play mode leaves asset unchanged: Assets/Materials/MIO\MIO Normal Copy.mat
+PASS: Play mode leaves asset unchanged: Assets/Materials/MIO\MIO Paper Grain.mat
+PASS: Play mode leaves asset unchanged: Assets/Materials/MIO\MIO Purple.mat
+PASS: Play mode leaves asset unchanged: Assets/Materials/MIO\MIO Yellow.mat
+PASS: Play mode leaves asset unchanged: Assets/Render Settings/MIO Interactive Renderer.asset
+PASS: Leaving Play returns to the default scene state

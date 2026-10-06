@@ -1,0 +1,16 @@
+MIO character - illustration study
+
+Reference artwork: Raphaelle Colin, Mio: Memories in Orbit - Shii
+https://raphaelle_colin.artstation.com/projects/BkbRor
+Local reference: raphaelle-colin-shii-5.webp
+Underlying character/IP: Douze Dixiemes / MIO: Memories in Orbit.
+
+These are newly constructed study meshes, not extracted game assets. Side and rear surfaces are artistic interpretations of the supplied front illustration. No redistribution license for the original character or artwork is asserted.
+
+The prefab contains separate helmet, torso, wing, limb and filament groups. All meshes have UV0 coordinates, vertex normals and tangents. Wing groups pivot near their shoulder joints. Meshes are stored as sub-assets in MIO Character Meshes.asset.
+
+Scene: Assets/Scenes/MIO Character Study.unity
+Rendering uses the improved toon shader with soft rim lighting. The 12 long filaments use the derived vertex-animation shader; open Assets/Scenes/MIO Shader Study.unity and press Play to see them move. Mesh edge bindings represent physical seams; they do not replace the assignment's future depth/normal post-process outline.
+
+Source: Assets/Editor/MIOCharacterBuilder.cs
+Generation uses no paid service.

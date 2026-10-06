@@ -1,0 +1,5 @@
+PASS: Hatching is visible at full-character framing: 10304 changed pixels.
+PASS: Pencil strokes darken the surface; no unintended brightening.
+PASS: Shadow Scale changes pencil stroke density.
+PASS: Living filament animation remains active.
+PASS: Shader compilation and linear, repeating, mipmapped texture import.
